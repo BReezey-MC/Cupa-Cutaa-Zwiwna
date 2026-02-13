@@ -23,6 +23,7 @@
             position: relative;
         }
 
+        /* Floating hearts */
         .hearts-container {
             position: absolute;
             top: 0; left: 0;
@@ -67,40 +68,45 @@
         }
 
         .buttons-container {
+            position: relative;
+            height: 140px; /* space for moving No button */
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 100px;
-            margin: 30px 0;
         }
 
         button {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.9rem;
+            font-size: 1.8rem;
             font-weight: 600;
-            padding: 18px 60px;
+            padding: 16px 48px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.35s ease;
             box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-            min-width: 180px;
+            position: absolute;
+            min-width: 160px;
             user-select: none;
         }
 
         #yes {
             background: linear-gradient(45deg, #ff6d9e, #ff4081);
             color: white;
+            left: 50%;
+            transform: translateX(-110%);
         }
 
         #yes:hover {
-            transform: scale(1.15) rotate(6deg);
-            box-shadow: 0 15px 35px rgba(255, 64, 129, 0.5);
+            transform: translateX(-110%) scale(1.12) rotate(5deg);
+            box-shadow: 0 15px 35px rgba(255, 64, 129, 0.45);
         }
 
         #no {
             background: linear-gradient(45deg, #bdbdbd, #9e9e9e);
             color: white;
+            left: 50%;
+            transform: translateX(10%);
         }
 
         .success {
@@ -114,11 +120,12 @@
 
         .footer-note {
             margin-top: 60px;
-            font-size: 1.1rem;
+            font-size: 1.05rem;
             color: #c2185b;
-            opacity: 0.9;
+            opacity: 0.85;
         }
 
+        /* Hidden YouTube player */
         #music-player {
             position: absolute;
             width: 1px; height: 1px;
@@ -129,6 +136,7 @@
 </head>
 <body>
 
+    <!-- Floating hearts -->
     <div class="hearts-container" id="hearts"></div>
 
     <div class="scene" id="scene">
@@ -144,17 +152,16 @@
         </div>
     </div>
 
-    <!-- YouTube embed: muted autoplay + unmute on first interaction -->
+    <!-- Hidden YouTube embed – starts MUTED -->
     <iframe 
         id="music-player"
-        loading="lazy"
-        src="https://www.youtube-nocookie.com/embed/7f_mlKlOLMo?autoplay=1&mute=1&loop=1&playlist=7f_mlKlOLMo&controls=0&modestbranding=1&showinfo=0&rel=0"
+        src="https://www.youtube.com/embed/7f_mlKlOLMo?autoplay=1&mute=1&loop=1&playlist=7f_mlKlOLMo&controls=0&modestbranding=1&showinfo=0&rel=0"
         frameborder="0"
         allow="autoplay; encrypted-media"
         allowfullscreen></iframe>
 
     <script>
-        // Create floating hearts
+        // Floating hearts
         function spawnHearts() {
             const container = document.getElementById('hearts');
             for (let i = 0; i < 30; i++) {
@@ -169,65 +176,160 @@
             }
         }
 
-        // Success screen when Yes is clicked
+        // Smooth runaway No button (your previous version – kept as is)
+        function runawayNo() {
+            const noBtn = document.getElementById('no');
+            let targetX = null;
+            let targetY = null;
+            let animationFrame = null;
+
+            function getCenter() {
+                const rect = noBtn.getBoundingClientRect();
+                return {
+                    x: rect.left + rect.width / 2,
+                    y: rect.top + rect.height / 2,
+                    width: rect.width,
+                    height: rect.height
+                };
+            }
+
+            function updatePosition() {
+                if (targetX === null || targetY === null) return;
+                const current = noBtn.getBoundingClientRect();
+                const cx = current.left + current.width / 2;
+                const cy = current.top + current.height / 2;
+                const dx = targetX - cx;
+                const dy = targetY - cy;
+                const distance = Math.hypot(dx, dy);
+
+                if (distance < 2) {
+                    targetX = null;
+                    targetY = null;
+                    return;
+                }
+
+                const step = 0.30 + Math.random() * 0.18;
+                const moveX = dx * step;
+                const moveY = dy * step;
+
+                let newLeft = current.left + moveX;
+                let newTop  = current.top  + moveY;
+
+                const margin = 40;
+                newLeft = Math.max(margin, Math.min(newLeft, window.innerWidth - current.width - margin));
+                newTop  = Math.max(margin, Math.min(newTop, window.innerHeight - current.height - margin));
+
+                noBtn.style.left = newLeft + 'px';
+                noBtn.style.top  = newTop + 'px';
+
+                animationFrame = requestAnimationFrame(updatePosition);
+            }
+
+            document.addEventListener('mousemove', (e) => {
+                const { x: centerX, y: centerY, width, height } = getCenter();
+                const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+
+                if (dist < 160) {
+                    const angle = Math.atan2(centerY - e.clientY, centerX - e.clientX);
+                    const panicLevel = Math.max(0, 1 - dist / 160);
+                    const baseDist = 100 + 180 * panicLevel;
+                    const randomExtra = Math.random() * 60 - 30;
+
+                    const desiredX = centerX + Math.cos(angle) * (baseDist + randomExtra);
+                    const desiredY = centerY + Math.sin(angle) * (baseDist + randomExtra);
+
+                    targetX = Math.max(40, Math.min(desiredX, window.innerWidth - width - 40));
+                    targetY = Math.max(40, Math.min(desiredY, window.innerHeight - height - 40));
+
+                    if (!animationFrame) {
+                        animationFrame = requestAnimationFrame(updatePosition);
+                    }
+                }
+            });
+
+            setInterval(() => {
+                const { x: cx, y: cy } = getCenter();
+                if (targetX === null && Math.random() < 0.08) {
+                    targetX = cx + (Math.random() - 0.5) * 140;
+                    targetY = cy + (Math.random() - 0.5) * 140;
+                    targetX = Math.max(40, Math.min(targetX, window.innerWidth - noBtn.offsetWidth - 40));
+                    targetY = Math.max(40, Math.min(targetY, window.innerHeight - noBtn.offsetHeight - 40));
+                    if (!animationFrame) animationFrame = requestAnimationFrame(updatePosition);
+                }
+            }, 1500);
+        }
+
+        // Yes → success screen
         function yesClicked() {
             const scene = document.getElementById('scene');
             scene.innerHTML = `
                 <div class="success">
-                    <h1 style="font-size: 5.4rem; margin-bottom: 30px;">YAYYYY! 💖💖💖</h1>
-                    <p style="font-size: 2.4rem; color: #c2185b; margin: 30px 0;">
+                    <h1 style="font-size: 5.2rem; margin-bottom: 30px;">YAYYYY! 💖💖💖</h1>
+                    <p style="font-size: 2.3rem; color: #c2185b; margin: 30px 0;">
                         See You On Saturday !!! <br>
                         Let's not fight on Saturday Wohooo 🥰
                     </p>
-                    <div style="font-size: 6rem; margin: 25px 0;">💃🕺❤️✨</div>
-                    <p style="font-size: 1.6rem; color: #555;">See you soon, My Cupa Nopa Spopa lil cute shit 🌸</p>
+                    <div style="font-size: 5.5rem; margin: 20px 0;">💃🕺❤️✨</div>
+                    <p style="font-size: 1.5rem; color: #555;">See you soon, My Cupa Nopa Spopa lil cute shit 🌸</p>
                 </div>
             `;
 
-            // Heart burst effect
-            for (let i = 0; i < 24; i++) {
+            // Extra heart burst
+            for (let i = 0; i < 20; i++) {
                 setTimeout(() => {
                     const h = document.createElement('div');
                     h.style.position = 'fixed';
                     h.style.left = Math.random()*100 + 'vw';
-                    h.style.top = Math.random()*60 + 'vh';
-                    h.style.fontSize = '3.8rem';
+                    h.style.top = Math.random()*50 + 'vh';
+                    h.style.fontSize = '3.5rem';
                     h.style.zIndex = '999';
-                    h.style.transition = 'all 3.5s';
+                    h.style.transition = 'all 3.2s';
                     h.textContent = '💖';
                     document.body.appendChild(h);
                     setTimeout(() => {
-                        h.style.transform = `translateY(-${450 + Math.random()*550}px)`;
+                        h.style.transform = `translateY(-${400 + Math.random()*500}px)`;
                         h.style.opacity = '0';
-                    }, 100);
-                    setTimeout(() => h.remove(), 4200);
-                }, i * 70);
+                    }, 80);
+                    setTimeout(() => h.remove(), 4000);
+                }, i * 60);
             }
         }
 
-        // Music: unmute on first user interaction
+        // ────────────────────────────────────────────────
+        // MUSIC: Start muted → unmute on first user click
+        // ────────────────────────────────────────────────
         const musicIframe = document.getElementById('music-player');
         let musicUnmuted = false;
 
+        // Try to unmute on first interaction (click anywhere)
         function unlockAudio() {
             if (!musicUnmuted) {
                 musicUnmuted = true;
+                // Remove mute parameter
                 let src = musicIframe.src;
                 if (src.includes('&mute=1')) {
                     src = src.replace('&mute=1', '');
                 }
+                // Force reload iframe with sound
                 musicIframe.src = src;
             }
         }
 
-        // Trigger on click or touch
+        // Listen for clicks (desktop + mobile tap)
         document.addEventListener('click', unlockAudio, { once: true });
+        // Also catch touch (mobile)
         document.addEventListener('touchstart', unlockAudio, { once: true });
 
-        // Initialize
+        // Init everything
         window.onload = () => {
             spawnHearts();
-            // Buttons are now static → no need for positioning code
+            runawayNo();
+
+            // Center buttons initially
+            const yes = document.getElementById('yes');
+            const no  = document.getElementById('no');
+            yes.style.top = '50%';
+            no.style.top  = '50%';
         };
     </script>
 </body>

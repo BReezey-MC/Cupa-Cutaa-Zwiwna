@@ -4,10 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Will Cupa Be My Valentine? 💕</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&amp;family=Poppins:wght@400;600&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap');
-
         * {
             margin: 0;
             padding: 0;
@@ -21,17 +19,15 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            background: linear-gradient(135deg, #ffe4e8, #ffc1d4);
+            background: linear-gradient(135deg, #ffebee, #ffc1e3);
             position: relative;
         }
 
-        /* Cute floating hearts background */
+        /* Floating hearts */
         .hearts-container {
             position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
             overflow: hidden;
             z-index: 1;
             pointer-events: none;
@@ -39,233 +35,222 @@
 
         .heart {
             position: absolute;
-            font-size: 28px;
-            color: #ff4d94;
-            opacity: 0.85;
-            animation: floatHeart 12s linear infinite;
-            text-shadow: 0 0 8px rgba(255, 77, 148, 0.6);
+            font-size: 24px;
+            color: #ff4081;
+            opacity: 0.8;
+            animation: float 14s linear infinite;
         }
 
-        @keyframes floatHeart {
-            0% {
-                transform: translateY(120vh) rotate(0deg);
-            }
-            100% {
-                transform: translateY(-120px) rotate(360deg);
-            }
+        @keyframes float {
+            0% { transform: translateY(110vh) rotate(0deg); }
+            100% { transform: translateY(-150px) rotate(720deg); }
         }
 
         .scene {
             position: relative;
             z-index: 10;
             text-align: center;
-            max-width: 700px;
-            padding: 50px 40px;
-            background: rgba(255, 255, 255, 0.92);
-            border-radius: 30px;
-            box-shadow: 0 25px 50px -12px rgb(255 105 180 / 0.4);
-            backdrop-filter: blur(10px);
+            max-width: 720px;
+            padding: 40px 30px;
+            background: rgba(255, 255, 255, 0.94);
+            border-radius: 28px;
+            box-shadow: 0 20px 50px rgba(255, 105, 180, 0.35);
+            backdrop-filter: blur(8px);
         }
 
         h1 {
             font-family: 'Dancing Script', cursive;
-            font-size: 3.8rem;
-            color: #e91e63;
-            margin-bottom: 40px;
+            font-size: 3.6rem;
+            color: #d81b60;
+            margin-bottom: 50px;
             line-height: 1.1;
-            text-shadow: 3px 3px 0 #fff, -1px -1px 0 #fff, 1px -1px 0 #fff, -1px 1px 0 #fff, 1px 1px 0 #fff;
+            text-shadow: 2px 2px 0 #fff, -1px -1px 0 #fff, 1px 1px 0 #fff;
         }
 
-        .buttons {
+        .buttons-container {
+            position: relative;
+            height: 140px; /* space for moving No button */
             display: flex;
             justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
+            align-items: center;
         }
 
         button {
             font-family: 'Poppins', sans-serif;
-            font-size: 2.1rem;
-            padding: 22px 55px;
+            font-size: 1.8rem;          /* smaller than before */
+            font-weight: 600;
+            padding: 16px 48px;         /* smaller padding */
             border: none;
-            border-radius: 60px;
+            border-radius: 50px;
             cursor: pointer;
-            transition: all 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            transition: all 0.35s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
             position: absolute;
-            min-width: 220px;
+            min-width: 160px;
+            user-select: none;
         }
 
         #yes {
-            background: linear-gradient(45deg, #ff69b4, #ff1493);
+            background: linear-gradient(45deg, #ff6d9e, #ff4081);
             color: white;
-            left: 28%;
-            top: 58%;
-            z-index: 20;
+            left: 50%;
+            transform: translateX(-110%);
         }
 
         #yes:hover {
-            transform: scale(1.15) rotate(8deg);
-            box-shadow: 0 20px 40px rgba(255, 105, 180, 0.5);
+            transform: translateX(-110%) scale(1.12) rotate(5deg);
+            box-shadow: 0 15px 35px rgba(255, 64, 129, 0.45);
         }
 
         #no {
-            background: linear-gradient(45deg, #9e9e9e, #757575);
+            background: linear-gradient(45deg, #bdbdbd, #9e9e9e);
             color: white;
-            left: 52%;
-            top: 58%;
-            z-index: 20;
+            left: 50%;
+            transform: translateX(10%);
         }
 
         .success {
-            animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            animation: pop 0.7s ease-out;
         }
 
-        @keyframes popIn {
-            0% { transform: scale(0.3); opacity: 0; }
+        @keyframes pop {
+            0% { transform: scale(0.4); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
 
-        .footer {
-            margin-top: 50px;
-            font-size: 1.1rem;
-            color: #e91e63;
-            opacity: 0.8;
+        .footer-note {
+            margin-top: 60px;
+            font-size: 1.05rem;
+            color: #c2185b;
+            opacity: 0.85;
+        }
+
+        /* Hidden YouTube player for background music */
+        #music-player {
+            position: absolute;
+            width: 1px; height: 1px;
+            opacity: 0;
+            pointer-events: none;
         }
     </style>
 </head>
 <body>
+
     <!-- Floating hearts -->
-    <div class="hearts-container" id="heartsContainer"></div>
+    <div class="hearts-container" id="hearts"></div>
 
     <div class="scene" id="scene">
-        <h1>Will Cupa Be My Valentine<br>on Saturday? 💖</h1>
-        
-        <div class="buttons">
+        <h1>Will Cupa Be My Valentine<br>on Saturday? 💖✨</h1>
+
+        <div class="buttons-container">
             <button id="yes" onclick="yesClicked()">Yes 💕</button>
             <button id="no">No 😢</button>
         </div>
-        
-        <div class="footer">
-            (the "No" button is shy... chase it if you dare)
+
+        <div class="footer-note">
+            (the "No" is playing hard to get… catch it if you can!)
         </div>
     </div>
 
+    <!-- Hidden YouTube embed for autoplay music -->
+    <iframe 
+        id="music-player"
+        src="https://www.youtube.com/embed/7f_mlKlOLMo?autoplay=1&loop=1&playlist=7f_mlKlOLMo&mute=0&controls=0&modestbranding=1&showinfo=0&rel=0"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen></iframe>
+
     <script>
-        // Create floating hearts
-        function createHearts() {
-            const container = document.getElementById('heartsContainer');
-            for (let i = 0; i < 35; i++) {
+        // Floating hearts
+        function spawnHearts() {
+            const container = document.getElementById('hearts');
+            for (let i = 0; i < 30; i++) {
                 const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.textContent = ['❤️', '💖', '💗', '💘', '💝'][Math.floor(Math.random() * 5)];
-                
-                // Random positioning and timing
-                const left = Math.random() * 100;
-                heart.style.left = `${left}vw`;
-                heart.style.animationDuration = `${8 + Math.random() * 9}s`;
-                heart.style.animationDelay = `-${Math.random() * 12}s`;
-                heart.style.fontSize = `${22 + Math.random() * 26}px`;
-                heart.style.opacity = 0.6 + Math.random() * 0.4;
-                
+                heart.className = 'heart';
+                heart.textContent = ['💗','💖','❤️','💘','💝'][Math.floor(Math.random()*5)];
+                heart.style.left = Math.random() * 100 + 'vw';
+                heart.style.animationDuration = (10 + Math.random() * 12) + 's';
+                heart.style.animationDelay = -Math.random() * 15 + 's';
+                heart.style.fontSize = (18 + Math.random() * 28) + 'px';
                 container.appendChild(heart);
             }
         }
 
-        // The famous "No" button that runs away
-        function makeNoRunAway() {
+        // No button runs away but stays on screen
+        function runawayNo() {
             const noBtn = document.getElementById('no');
-            
-            // Initial position
-            noBtn.style.transition = 'none';
-            
-            // Make it run when mouse gets close
             document.addEventListener('mousemove', (e) => {
                 const rect = noBtn.getBoundingClientRect();
-                const mouseX = e.clientX;
-                const mouseY = e.clientY;
-                
-                const btnCenterX = rect.left + rect.width / 2;
-                const btnCenterY = rect.top + rect.height / 2;
-                
-                const distance = Math.hypot(mouseX - btnCenterX, mouseY - btnCenterY);
-                
-                if (distance < 220) {
-                    // Calculate new position (away from mouse)
-                    const angle = Math.atan2(btnCenterY - mouseY, btnCenterX - mouseX);
-                    const pushDistance = 180 + Math.random() * 80;
-                    
-                    let newX = btnCenterX + Math.cos(angle) * pushDistance;
-                    let newY = btnCenterY + Math.sin(angle) * pushDistance;
-                    
-                    // Keep it on screen
-                    newX = Math.max(120, Math.min(newX, window.innerWidth - 220));
-                    newY = Math.max(120, Math.min(newY, window.innerHeight - 180));
-                    
-                    noBtn.style.transition = 'left 0.25s ease-out, top 0.25s ease-out';
-                    noBtn.style.left = `${newX}px`;
-                    noBtn.style.top = `${newY}px`;
+                const centerX = rect.left + rect.width / 2;
+                const centerY = rect.top + rect.height / 2;
+
+                const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+
+                if (dist < 180) {   // trigger distance
+                    const angle = Math.atan2(centerY - e.clientY, centerX - e.clientX);
+                    let moveDist = 140 + Math.random() * 90;
+
+                    let newX = centerX + Math.cos(angle) * moveDist;
+                    let newY = centerY + Math.sin(angle) * moveDist;
+
+                    // Keep inside viewport with margin
+                    const margin = 60;
+                    newX = Math.max(margin, Math.min(newX, window.innerWidth - rect.width - margin));
+                    newY = Math.max(margin, Math.min(newY, window.innerHeight - rect.height - margin));
+
+                    noBtn.style.transition = 'left 0.28s ease-out, top 0.28s ease-out';
+                    noBtn.style.left = newX + 'px';
+                    noBtn.style.top  = newY + 'px';
                 }
             });
         }
 
-        // Yes button clicked → cute success screen
+        // Yes → success screen
         function yesClicked() {
             const scene = document.getElementById('scene');
-            
             scene.innerHTML = `
-                <div style="animation: popIn 0.8s;">
-                    <h1 style="font-size: 4.8rem; margin-bottom: 30px;">YESSS!!! 💖💖💖</h1>
-                    <p style="font-size: 2.4rem; color: #e91e63; margin-bottom: 40px; line-height: 1.4;">
-                        Cupa is officially your Valentine on Saturday!<br>
-                        I can't wait to spend it with you ❤️
+                <div class="success">
+                    <h1 style="font-size: 5.2rem; margin-bottom: 30px;">YAYYYY! 💖💖💖</h1>
+                    <p style="font-size: 2.3rem; color: #c2185b; margin: 30px 0;">
+                        Cupa is your Valentine on Saturday!<br>
+                        So excited to spend it with you 🥰
                     </p>
-                    <div style="font-size: 6rem; margin: 30px 0;">
-                        🥰💃🕺🥰
-                    </div>
-                    <p style="font-size: 1.6rem; color: #666; margin-top: 40px;">
-                        See you soon, my love ✨
-                    </p>
+                    <div style="font-size: 5.5rem; margin: 20px 0;">💃🕺❤️✨</div>
+                    <p style="font-size: 1.5rem; color: #555;">See you soon, my favorite person 🌸</p>
                 </div>
             `;
-            
-            // Extra floating hearts burst
-            for (let i = 0; i < 25; i++) {
+
+            // Extra heart burst
+            for (let i = 0; i < 20; i++) {
                 setTimeout(() => {
-                    const burst = document.createElement('div');
-                    burst.style.position = 'fixed';
-                    burst.style.left = Math.random() * 100 + 'vw';
-                    burst.style.top = Math.random() * 60 + 'vh';
-                    burst.style.fontSize = '40px';
-                    burst.style.zIndex = '100';
-                    burst.style.transition = 'all 3s';
-                    burst.textContent = '❤️';
-                    document.body.appendChild(burst);
-                    
+                    const h = document.createElement('div');
+                    h.style.position = 'fixed';
+                    h.style.left = Math.random()*100 + 'vw';
+                    h.style.top = Math.random()*50 + 'vh';
+                    h.style.fontSize = '3.5rem';
+                    h.style.zIndex = '999';
+                    h.style.transition = 'all 3.2s';
+                    h.textContent = '💖';
+                    document.body.appendChild(h);
                     setTimeout(() => {
-                        burst.style.transform = `translateY(-${300 + Math.random() * 400}px)`;
-                        burst.style.opacity = '0';
-                    }, 50);
-                    
-                    setTimeout(() => burst.remove(), 3500);
-                }, i * 40);
+                        h.style.transform = `translateY(-${400 + Math.random()*500}px)`;
+                        h.style.opacity = '0';
+                    }, 80);
+                    setTimeout(() => h.remove(), 4000);
+                }, i * 60);
             }
         }
 
-        // Initialize everything
-        window.onload = function() {
-            createHearts();
-            makeNoRunAway();
-            
-            // Make sure buttons are positioned correctly on load
-            const yesBtn = document.getElementById('yes');
-            const noBtn = document.getElementById('no');
-            
-            // Set initial positions in pixels for smooth movement
-            yesBtn.style.left = '28%';
-            yesBtn.style.top = '58%';
-            noBtn.style.left = '52%';
-            noBtn.style.top = '58%';
+        // Init
+        window.onload = () => {
+            spawnHearts();
+            runawayNo();
+
+            // Center buttons initially
+            const yes = document.getElementById('yes');
+            const no  = document.getElementById('no');
+            yes.style.top = '50%';
+            no.style.top  = '50%';
         };
     </script>
 </body>

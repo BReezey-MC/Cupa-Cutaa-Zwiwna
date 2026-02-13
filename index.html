@@ -178,33 +178,104 @@
 
         // No button runs away but stays on screen
         function runawayNo() {
-            const noBtn = document.getElementById('no');
-            document.addEventListener('mousemove', (e) => {
-                const rect = noBtn.getBoundingClientRect();
-                const centerX = rect.left + rect.width / 2;
-                const centerY = rect.top + rect.height / 2;
+    const noBtn = document.getElementById('no');
+    
+    // We'll store the target position and smoothly move towards it
+    let targetX = null;
+    let targetY = null;
+    let animationFrame = null;
 
-                const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+    // Helper: get current center position of the button
+    function getCenter() {
+        const rect = noBtn.getBoundingClientRect();
+        return {
+            x: rect.left + rect.width / 2,
+            y: rect.top + rect.height / 2,
+            width: rect.width,
+            height: rect.height
+        };
+    }
 
-                if (dist < 180) {   // trigger distance
-                    const angle = Math.atan2(centerY - e.clientY, centerX - e.clientX);
-                    let moveDist = 140 + Math.random() * 90;
+    // Move smoothly towards target
+    function updatePosition() {
+        if (targetX === null || targetY === null) return;
 
-                    let newX = centerX + Math.cos(angle) * moveDist;
-                    let newY = centerY + Math.sin(angle) * moveDist;
+        const current = noBtn.getBoundingClientRect();
+        const cx = current.left + current.width / 2;
+        const cy = current.top + current.height / 2;
 
-                    // Keep inside viewport with margin
-                    const margin = 60;
-                    newX = Math.max(margin, Math.min(newX, window.innerWidth - rect.width - margin));
-                    newY = Math.max(margin, Math.min(newY, window.innerHeight - rect.height - margin));
+        // How far we still need to go
+        const dx = targetX - cx;
+        const dy = targetY - cy;
+        const distance = Math.hypot(dx, dy);
 
-                    noBtn.style.transition = 'left 0.28s ease-out, top 0.28s ease-out';
-                    noBtn.style.left = newX + 'px';
-                    noBtn.style.top  = newY + 'px';
-                }
-            });
+        if (distance < 2) {
+            // close enough → stop
+            targetX = null;
+            targetY = null;
+            return;
         }
 
+        // Move ~25–40% of remaining distance each frame (smooth + snappy)
+        const step = 0.30 + Math.random() * 0.18;
+        const moveX = dx * step;
+        const moveY = dy * step;
+
+        let newLeft = current.left + moveX;
+        let newTop  = current.top  + moveY;
+
+        // Strict screen boundaries (with generous margin so it never touches edges)
+        const margin = 40;
+        newLeft = Math.max(margin, Math.min(newLeft, window.innerWidth - current.width - margin));
+        newTop  = Math.max(margin, Math.min(newTop, window.innerHeight - current.height - margin));
+
+        noBtn.style.left = newLeft + 'px';
+        noBtn.style.top  = newTop + 'px';
+
+        animationFrame = requestAnimationFrame(updatePosition);
+    }
+
+    // Main mouse tracking
+    document.addEventListener('mousemove', (e) => {
+        const { x: centerX, y: centerY, width, height } = getCenter();
+
+        const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+
+        if (dist < 160) {  // trigger radius — tune this value (120–220 usually feels good)
+            // Calculate escape direction (away from mouse)
+            const angle = Math.atan2(centerY - e.clientY, centerX - e.clientX);
+
+            // Jump distance: bigger when mouse is very close
+            const panicLevel = Math.max(0, 1 - dist / 160);
+            const baseDist = 100 + 180 * panicLevel;
+            const randomExtra = Math.random() * 60 - 30; // small randomness
+
+            const desiredX = centerX + Math.cos(angle) * (baseDist + randomExtra);
+            const desiredY = centerY + Math.sin(angle) * (baseDist + randomExtra);
+
+            // Clamp to screen (very important!)
+            targetX = Math.max(40, Math.min(desiredX, window.innerWidth - width - 40));
+            targetY = Math.max(40, Math.min(desiredY, window.innerHeight - height - 40));
+
+            // Start smooth movement if not already running
+            if (!animationFrame) {
+                animationFrame = requestAnimationFrame(updatePosition);
+            }
+        }
+    });
+
+    // Optional: small random wandering when mouse is far away (cute personality)
+    setInterval(() => {
+        const { x: cx, y: cy } = getCenter();
+        if (targetX === null && Math.random() < 0.08) {  // ~once every 12 seconds on average
+            targetX = cx + (Math.random() - 0.5) * 140;
+            targetY = cy + (Math.random() - 0.5) * 140;
+            targetX = Math.max(40, Math.min(targetX, window.innerWidth - noBtn.offsetWidth - 40));
+            targetY = Math.max(40, Math.min(targetY, window.innerHeight - noBtn.offsetHeight - 40));
+            if (!animationFrame) animationFrame = requestAnimationFrame(updatePosition);
+        }
+    }, 1500);
+}
         // Yes → success screen
         function yesClicked() {
             const scene = document.getElementById('scene');

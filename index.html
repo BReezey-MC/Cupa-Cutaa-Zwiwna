@@ -19,11 +19,6 @@
       font-family: 'Segoe UI', system-ui, sans-serif;
       color: #fff;
       overflow: hidden;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
       position: relative;
     }
 
@@ -39,6 +34,12 @@
       z-index: 10;
       padding: 30px;
       max-width: 90%;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
     }
 
     h1 {
@@ -72,6 +73,8 @@
       flex-wrap: wrap;
       justify-content: center;
       margin-top: 50px;
+      position: relative;
+      width: 100%;
     }
 
     .btn {
@@ -79,7 +82,6 @@
       font-weight: bold;
       padding: 20px 60px;
       border-radius: 30px;
-      text-decoration: none;
       cursor: pointer;
       transition: all 0.3s;
       box-shadow: 0 8px 20px rgba(0,0,0,0.25);
@@ -102,8 +104,9 @@
       background: #e0e0e0;
       color: #333;
       border: 3px solid #999;
-      position: relative;
-      transition: all 0.25s ease;
+      position: absolute;
+      transition: left 0.25s ease, top 0.25s ease, background 0.2s;
+      will-change: left, top;
     }
 
     .no:hover,
@@ -140,37 +143,57 @@
 
   <script>
     const noBtn = document.getElementById('noBtn');
+    const margin = 30; // pixels from edge – increase to 50 if you want stricter limits
 
     function moveNoButton() {
-      const maxX = window.innerWidth - noBtn.offsetWidth - 40;
-      const maxY = window.innerHeight - noBtn.offsetHeight - 40;
+      // Re-measure every time (in case size changed)
+      const width  = noBtn.offsetWidth  || 180; // fallback if not yet rendered
+      const height = noBtn.offsetHeight || 80;
 
-      const newX = Math.random() * maxX;
-      const newY = Math.random() * maxY;
+      // Safe movement area
+      const maxLeft = window.innerWidth  - width  - margin;
+      const maxTop  = window.innerHeight - height - margin;
 
-      noBtn.style.left = newX + 'px';
-      noBtn.style.top  = newY + 'px';
-      noBtn.style.position = 'absolute';
+      // Generate position inside safe zone
+      let newLeft = margin + Math.random() * (maxLeft - margin);
+      let newTop  = margin + Math.random() * (maxTop  - margin);
+
+      // Extra clamp just to be 100% sure (prevents any calculation edge cases)
+      newLeft = Math.max(margin, Math.min(newLeft, maxLeft));
+      newTop  = Math.max(margin, Math.min(newTop,  maxTop));
+
+      noBtn.style.left = newLeft + 'px';
+      noBtn.style.top  = newTop  + 'px';
     }
 
+    // Start in a visible position
+    setTimeout(moveNoButton, 100); // small delay so dimensions are ready
+
+    // Move when mouse approaches
     document.addEventListener('mousemove', (e) => {
+      if (!noBtn.offsetParent) return; // skip if hidden
+
       const rect = noBtn.getBoundingClientRect();
-      const btnCenterX = rect.left + rect.width / 2;
-      const btnCenterY = rect.top + rect.height / 2;
+      const centerX = rect.left + rect.width / 2;
+      const centerY = rect.top  + rect.height / 2;
 
-      const distance = Math.hypot(e.clientX - btnCenterX, e.clientY - btnCenterY);
+      const distance = Math.hypot(e.clientX - centerX, e.clientY - centerY);
 
-      if (distance < 120) {
+      if (distance < 150) {   // ← sensitivity (140–180 works well)
         moveNoButton();
       }
     });
 
+    // Move on click attempt
     noBtn.addEventListener('click', (e) => {
       e.preventDefault();
       moveNoButton();
       noBtn.classList.add('active');
       setTimeout(() => noBtn.classList.remove('active'), 400);
     });
+
+    // Handle window resize
+    window.addEventListener('resize', moveNoButton);
   </script>
 
 </body>

@@ -149,11 +149,12 @@
 
     <!-- Hidden YouTube embed – starts MUTED, unmutes on first click -->
     <iframe 
-        id="music-player"
-        src="https://www.youtube.com/embed/7f_mlKlOLMo?autoplay=1&mute=1&loop=1&playlist=7f_mlKlOLMo&controls=0&modestbranding=1&showinfo=0&rel=0"
-        frameborder="0"
-        allow="autoplay; encrypted-media"
-        allowfullscreen></iframe>
+    id="music-player"
+    loading="lazy"  <!-- <-- this is the key addition -->
+    src="https://www.youtube.com/embed/7f_mlKlOLMo?autoplay=1&mute=1&loop=1&playlist=7f_mlKlOLMo&controls=0&modestbranding=1&showinfo=0&rel=0"
+    frameborder="0"
+    allow="autoplay; encrypted-media"
+    allowfullscreen></iframe>
 
     <script>
         // Floating hearts

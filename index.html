@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Valentine's Day 💕</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      min-height: 100vh;
+      background: linear-gradient(135deg, #ffecf1 0%, #ffe4e9 50%, #f8d1e0 100%);
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      color: #333;
+      overflow-x: hidden;
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+    }
+
+    /* Subtle floating hearts */
+    .heart {
+      position: absolute;
+      font-size: 2rem;
+      color: rgba(255, 182, 193, 0.85);
+      pointer-events: none;
+      animation: drift 18s linear infinite;
+      z-index: 1;
+    }
+
+    @keyframes drift {
+      0% {
+        transform: translateY(120vh) translateX(-20vw) rotate(0deg);
+        opacity: 0.3;
+      }
+      30% {
+        opacity: 0.9;
+      }
+      100% {
+        transform: translateY(-30vh) translateX(30vw) rotate(720deg);
+        opacity: 0;
+      }
+    }
+
+    /* Multiple hearts with variation */
+    .heart:nth-child(1)  { left: 10%; animation-duration: 22s; animation-delay: 0s; }
+    .heart:nth-child(2)  { left: 25%; animation-duration: 28s; animation-delay: 3s; font-size: 2.5rem; }
+    .heart:nth-child(3)  { left: 40%; animation-duration: 19s; animation-delay: 1.5s; }
+    .heart:nth-child(4)  { left: 55%; animation-duration: 25s; animation-delay: 5s; font-size: 1.8rem; }
+    .heart:nth-child(5)  { left: 70%; animation-duration: 21s; animation-delay: 7s; }
+    .heart:nth-child(6)  { left: 85%; animation-duration: 26s; animation-delay: 2s; font-size: 2.2rem; }
+
+    .container {
+      position: relative;
+      z-index: 10;
+      padding: 40px 20px;
+      max-width: 800px;
+      background: rgba(255, 255, 255, 0.25);
+      border-radius: 28px;
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(255, 255, 255, 0.4);
+      box-shadow: 0 8px 32px rgba(255, 105, 180, 0.15);
+    }
+
+    h1 {
+      font-size: 3.5rem;
+      color: #e91e63;
+      margin-bottom: 20px;
+      text-shadow: 0 2px 10px rgba(233, 30, 99, 0.3);
+      font-weight: 600;
+    }
+
+    .subtitle {
+      font-size: 1.6rem;
+      color: #c2185b;
+      margin-bottom: 30px;
+      line-height: 1.4;
+    }
+
+    @media (max-width: 600px) {
+      h1 { font-size: 2.6rem; }
+      .subtitle { font-size: 1.4rem; }
+      .container { padding: 30px 15px; margin: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Floating hearts -->
+  <div class="heart">💗</div>
+  <div class="heart">❤️</div>
+  <div class="heart">💖</div>
+  <div class="heart">💕</div>
+  <div class="heart">💞</div>
+  <div class="heart">💓</div>
+
+  <div class="container">
+    <h1>Happy Valentine's Day</h1>
+    <p class="subtitle">To the one who makes my heart skip a beat every single day 💕<br>Can't wait to spend forever with you.</p>
+    
+    <!-- This is where your personal message / name / photo will go next -->
+  </div>
+
+</body>
+</html>

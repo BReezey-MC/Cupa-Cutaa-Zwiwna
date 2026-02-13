@@ -68,12 +68,11 @@
         }
 
         .buttons-container {
-            position: relative;
-            height: 140px; /* space reserved but not needed anymore */
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 60px; /* nice spacing between buttons */
+            gap: 80px;           /* nice space between Yes and No */
+            margin: 20px 0;
         }
 
         button {
@@ -103,10 +102,6 @@
         #no {
             background: linear-gradient(45deg, #bdbdbd, #9e9e9e);
             color: white;
-        }
-
-        #no:hover {
-            transform: scale(1.08);
         }
 
         .success {
@@ -212,7 +207,9 @@
             }
         }
 
+        // ────────────────────────────────────────────────
         // MUSIC: Start muted → unmute on first user click
+        // ────────────────────────────────────────────────
         const musicIframe = document.getElementById('music-player');
         let musicUnmuted = false;
 
@@ -234,7 +231,9 @@
         window.onload = () => {
             spawnHearts();
 
-            // No more runawayNo() call – button stays still
+            // Center buttons (they are now static and side-by-side)
+            const yes = document.getElementById('yes');
+            const no  = document.getElementById('no');
         };
     </script>
 </body>

@@ -1,336 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Will Cupa Be My Valentine? 💕</title>
-    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Will Cupa Be My Valentine? 💕</title>
 
-        body {
-            font-family: 'Poppins', sans-serif;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            background: linear-gradient(135deg, #ffebee, #ffc1e3);
-            position: relative;
-        }
+<link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 
-        /* Floating hearts */
-        .hearts-container {
-            position: absolute;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            overflow: hidden;
-            z-index: 1;
-            pointer-events: none;
-        }
+<style>
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+}
 
-        .heart {
-            position: absolute;
-            font-size: 24px;
-            color: #ff4081;
-            opacity: 0.8;
-            animation: float 14s linear infinite;
-        }
+body{
+font-family:'Poppins',sans-serif;
+height:100vh;
+overflow:hidden;
+display:flex;
+align-items:center;
+justify-content:center;
+background:linear-gradient(135deg,#ffebee,#ffc1e3);
+position:relative;
+}
 
-        @keyframes float {
-            0% { transform: translateY(110vh) rotate(0deg); }
-            100% { transform: translateY(-150px) rotate(720deg); }
-        }
+/* Floating hearts */
+.hearts-container{
+position:absolute;
+top:0;
+left:0;
+width:100%;
+height:100%;
+overflow:hidden;
+z-index:1;
+pointer-events:none;
+}
 
-        .scene {
-            position: relative;
-            z-index: 10;
-            text-align: center;
-            max-width: 720px;
-            padding: 40px 30px;
-            background: rgba(255, 255, 255, 0.94);
-            border-radius: 28px;
-            box-shadow: 0 20px 50px rgba(255, 105, 180, 0.35);
-            backdrop-filter: blur(8px);
-        }
+.heart{
+position:absolute;
+font-size:24px;
+color:#ff4081;
+opacity:0.8;
+animation:float 14s linear infinite;
+}
 
-        h1 {
-            font-family: 'Dancing Script', cursive;
-            font-size: 3.6rem;
-            color: #d81b60;
-            margin-bottom: 50px;
-            line-height: 1.1;
-            text-shadow: 2px 2px 0 #fff, -1px -1px 0 #fff, 1px 1px 0 #fff;
-        }
+@keyframes float{
+0%{transform:translateY(110vh) rotate(0deg);}
+100%{transform:translateY(-150px) rotate(720deg);}
+}
 
-        .buttons-container {
-            position: relative;
-            height: 140px; /* space for moving No button */
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
+/* Main Card */
+.scene{
+position:relative;
+z-index:10;
+text-align:center;
+max-width:720px;
+padding:40px 30px;
+background:rgba(255,255,255,0.95);
+border-radius:28px;
+box-shadow:0 20px 50px rgba(255,105,180,0.35);
+backdrop-filter:blur(8px);
+}
 
-        button {
-            font-family: 'Poppins', sans-serif;
-            font-size: 1.8rem;
-            font-weight: 600;
-            padding: 16px 48px;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: all 0.35s ease;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-            position: absolute;
-            min-width: 160px;
-            user-select: none;
-        }
+h1{
+font-family:'Dancing Script',cursive;
+font-size:3.6rem;
+color:#d81b60;
+margin-bottom:50px;
+}
 
-        #yes {
-            background: linear-gradient(45deg, #ff6d9e, #ff4081);
-            color: white;
-            left: 50%;
-            transform: translateX(-110%);
-        }
+/* Buttons */
+.buttons-container{
+position:relative;
+height:160px;
+}
 
-        #yes:hover {
-            transform: translateX(-110%) scale(1.12) rotate(5deg);
-            box-shadow: 0 15px 35px rgba(255, 64, 129, 0.45);
-        }
+button{
+font-family:'Poppins',sans-serif;
+font-size:1.8rem;
+font-weight:600;
+padding:16px 48px;
+border:none;
+border-radius:50px;
+cursor:pointer;
+position:absolute;
+min-width:160px;
+user-select:none;
+box-shadow:0 8px 25px rgba(0,0,0,0.12);
+transition:all .3s ease,left .2s ease,top .2s ease;
+}
 
-        #no {
-            background: linear-gradient(45deg, #bdbdbd, #9e9e9e);
-            color: white;
-            left: 50%;
-            transform: translateX(10%);
-        }
+/* YES */
+#yes{
+background:linear-gradient(45deg,#ff6d9e,#ff4081);
+color:white;
+left:40%;
+}
 
-        .success {
-            animation: pop 0.7s ease-out;
-        }
+#yes:hover{
+transform:scale(1.15) rotate(5deg);
+box-shadow:0 15px 35px rgba(255,64,129,.45);
+}
 
-        @keyframes pop {
-            0% { transform: scale(0.4); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
-        }
+/* NO */
+#no{
+background:linear-gradient(45deg,#bdbdbd,#9e9e9e);
+color:white;
+left:60%;
+}
 
-        .footer-note {
-            margin-top: 60px;
-            font-size: 1.05rem;
-            color: #c2185b;
-            opacity: 0.85;
-        }
+.success{
+animation:pop .7s ease-out;
+}
 
-        /* Hidden YouTube player */
-        #music-player {
-            position: absolute;
-            width: 1px; height: 1px;
-            opacity: 0;
-            pointer-events: none;
-        }
-    </style>
+@keyframes pop{
+0%{transform:scale(.4);opacity:0;}
+100%{transform:scale(1);opacity:1;}
+}
+
+.footer-note{
+margin-top:60px;
+font-size:1.05rem;
+color:#c2185b;
+opacity:.85;
+}
+
+/* Hidden music */
+#music-player{
+position:absolute;
+width:1px;
+height:1px;
+opacity:0;
+pointer-events:none;
+}
+
+</style>
 </head>
+
 <body>
 
-    <!-- Floating hearts -->
-    <div class="hearts-container" id="hearts"></div>
+<div class="hearts-container" id="hearts"></div>
 
-    <div class="scene" id="scene">
-        <h1>Will Cupa Be My Valentine<br>on Saturday? 💖✨</h1>
+<div class="scene" id="scene">
 
-        <div class="buttons-container">
-            <button id="yes" onclick="yesClicked()">Yes 💕</button>
-            <button id="no">No 😡</button>
-        </div>
+<h1>Will Cupa Be My Valentine<br>on Saturday? 💖✨</h1>
 
-        <div class="footer-note">
-            (I love you)
-        </div>
-    </div>
+<div class="buttons-container">
+<button id="yes" onclick="yesClicked()">Yes 💕</button>
+<button id="no">No 😡</button>
+</div>
 
-    <!-- Hidden YouTube embed – starts MUTED -->
-    <iframe 
-        id="music-player"
-        src="https://www.youtube.com/embed/7f_mlKlOLMo?autoplay=1&mute=1&loop=1&playlist=7f_mlKlOLMo&controls=0&modestbranding=1&showinfo=0&rel=0"
-        frameborder="0"
-        allow="autoplay; encrypted-media"
-        allowfullscreen></iframe>
+<div class="footer-note">(I love you)</div>
 
-    <script>
-        // Floating hearts
-        function spawnHearts() {
-            const container = document.getElementById('hearts');
-            for (let i = 0; i < 30; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.textContent = ['💗','💖','❤️','💘','💝'][Math.floor(Math.random()*5)];
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = (10 + Math.random() * 12) + 's';
-                heart.style.animationDelay = -Math.random() * 15 + 's';
-                heart.style.fontSize = (18 + Math.random() * 28) + 'px';
-                container.appendChild(heart);
-            }
-        }
+</div>
 
-        // Smooth runaway No button (your previous version – kept as is)
-        function runawayNo() {
-            const noBtn = document.getElementById('no');
-            let targetX = null;
-            let targetY = null;
-            let animationFrame = null;
+<!-- YouTube music -->
+<iframe id="music-player"
+src="https://www.youtube.com/embed/7f_mlKlOLMo?autoplay=1&mute=1&loop=1&playlist=7f_mlKlOLMo&controls=0"
+allow="autoplay">
+</iframe>
 
-            function getCenter() {
-                const rect = noBtn.getBoundingClientRect();
-                return {
-                    x: rect.left + rect.width / 2,
-                    y: rect.top + rect.height / 2,
-                    width: rect.width,
-                    height: rect.height
-                };
-            }
+<script>
 
-            function updatePosition() {
-                if (targetX === null || targetY === null) return;
-                const current = noBtn.getBoundingClientRect();
-                const cx = current.left + current.width / 2;
-                const cy = current.top + current.height / 2;
-                const dx = targetX - cx;
-                const dy = targetY - cy;
-                const distance = Math.hypot(dx, dy);
+/* Floating Hearts */
+function spawnHearts(){
+const container=document.getElementById("hearts");
 
-                if (distance < 2) {
-                    targetX = null;
-                    targetY = null;
-                    return;
-                }
+for(let i=0;i<30;i++){
+const heart=document.createElement("div");
+heart.className="heart";
 
-                const step = 0.30 + Math.random() * 0.18;
-                const moveX = dx * step;
-                const moveY = dy * step;
+heart.textContent=['💗','💖','❤️','💘','💝'][Math.floor(Math.random()*5)];
 
-                let newLeft = current.left + moveX;
-                let newTop  = current.top  + moveY;
+heart.style.left=Math.random()*100+"vw";
+heart.style.animationDuration=(10+Math.random()*12)+"s";
+heart.style.animationDelay=-Math.random()*15+"s";
+heart.style.fontSize=(18+Math.random()*28)+"px";
 
-                const margin = 40;
-                newLeft = Math.max(margin, Math.min(newLeft, window.innerWidth - current.width - margin));
-                newTop  = Math.max(margin, Math.min(newTop, window.innerHeight - current.height - margin));
+container.appendChild(heart);
+}
+}
 
-                noBtn.style.left = newLeft + 'px';
-                noBtn.style.top  = newTop + 'px';
+/* Runaway No Button */
+function runawayNo(){
 
-                animationFrame = requestAnimationFrame(updatePosition);
-            }
+const noBtn=document.getElementById("no");
 
-            document.addEventListener('mousemove', (e) => {
-                const { x: centerX, y: centerY, width, height } = getCenter();
-                const dist = Math.hypot(e.clientX - centerX, e.clientY - centerY);
+let targetX=null;
+let targetY=null;
+let animationFrame=null;
 
-                if (dist < 160) {
-                    const angle = Math.atan2(centerY - e.clientY, centerX - e.clientX);
-                    const panicLevel = Math.max(0, 1 - dist / 160);
-                    const baseDist = 100 + 180 * panicLevel;
-                    const randomExtra = Math.random() * 60 - 30;
+function getCenter(){
+const rect=noBtn.getBoundingClientRect();
+return{
+x:rect.left+rect.width/2,
+y:rect.top+rect.height/2,
+width:rect.width,
+height:rect.height
+};
+}
 
-                    const desiredX = centerX + Math.cos(angle) * (baseDist + randomExtra);
-                    const desiredY = centerY + Math.sin(angle) * (baseDist + randomExtra);
+function updatePosition(){
 
-                    targetX = Math.max(40, Math.min(desiredX, window.innerWidth - width - 40));
-                    targetY = Math.max(40, Math.min(desiredY, window.innerHeight - height - 40));
+if(targetX===null || targetY===null) return;
 
-                    if (!animationFrame) {
-                        animationFrame = requestAnimationFrame(updatePosition);
-                    }
-                }
-            });
+const current=noBtn.getBoundingClientRect();
 
-            setInterval(() => {
-                const { x: cx, y: cy } = getCenter();
-                if (targetX === null && Math.random() < 0.08) {
-                    targetX = cx + (Math.random() - 0.5) * 140;
-                    targetY = cy + (Math.random() - 0.5) * 140;
-                    targetX = Math.max(40, Math.min(targetX, window.innerWidth - noBtn.offsetWidth - 40));
-                    targetY = Math.max(40, Math.min(targetY, window.innerHeight - noBtn.offsetHeight - 40));
-                    if (!animationFrame) animationFrame = requestAnimationFrame(updatePosition);
-                }
-            }, 1500);
-        }
+const cx=current.left+current.width/2;
+const cy=current.top+current.height/2;
 
-        // Yes → success screen
-        function yesClicked() {
-            const scene = document.getElementById('scene');
-            scene.innerHTML = `
-                <div class="success">
-                    <h1 style="font-size: 5.2rem; margin-bottom: 30px;">YAYYYY! 💖💖💖</h1>
-                    <p style="font-size: 2.3rem; color: #c2185b; margin: 30px 0;">
-                        See You On Saturday !!! <br>
-                        Let's not fight on Saturday Wohooo 🥰
-                    </p>
-                    <div style="font-size: 5.5rem; margin: 20px 0;">💃🕺❤️✨</div>
-                    <p style="font-size: 1.5rem; color: #555;">See you soon, My Cupa Nopa Spopa lil cute shit 🌸</p>
-                </div>
-            `;
+const dx=targetX-cx;
+const dy=targetY-cy;
 
-            // Extra heart burst
-            for (let i = 0; i < 20; i++) {
-                setTimeout(() => {
-                    const h = document.createElement('div');
-                    h.style.position = 'fixed';
-                    h.style.left = Math.random()*100 + 'vw';
-                    h.style.top = Math.random()*50 + 'vh';
-                    h.style.fontSize = '3.5rem';
-                    h.style.zIndex = '999';
-                    h.style.transition = 'all 3.2s';
-                    h.textContent = '💖';
-                    document.body.appendChild(h);
-                    setTimeout(() => {
-                        h.style.transform = `translateY(-${400 + Math.random()*500}px)`;
-                        h.style.opacity = '0';
-                    }, 80);
-                    setTimeout(() => h.remove(), 4000);
-                }, i * 60);
-            }
-        }
+const distance=Math.hypot(dx,dy);
 
-        // ────────────────────────────────────────────────
-        // MUSIC: Start muted → unmute on first user click
-        // ────────────────────────────────────────────────
-        const musicIframe = document.getElementById('music-player');
-        let musicUnmuted = false;
+if(distance<2){
+targetX=null;
+targetY=null;
+animationFrame=null;
+return;
+}
 
-        // Try to unmute on first interaction (click anywhere)
-        function unlockAudio() {
-            if (!musicUnmuted) {
-                musicUnmuted = true;
-                // Remove mute parameter
-                let src = musicIframe.src;
-                if (src.includes('&mute=1')) {
-                    src = src.replace('&mute=1', '');
-                }
-                // Force reload iframe with sound
-                musicIframe.src = src;
-            }
-        }
+const step=.32;
 
-        // Listen for clicks (desktop + mobile tap)
-        document.addEventListener('click', unlockAudio, { once: true });
-        // Also catch touch (mobile)
-        document.addEventListener('touchstart', unlockAudio, { once: true });
+let newLeft=current.left+dx*step;
+let newTop=current.top+dy*step;
 
-        // Init everything
-        window.onload = () => {
-            spawnHearts();
-            runawayNo();
+const margin=40;
 
-            // Center buttons initially
-            const yes = document.getElementById('yes');
-            const no  = document.getElementById('no');
-            yes.style.top = '50%';
-            no.style.top  = '50%';
-        };
-    </script>
+newLeft=Math.max(margin,Math.min(newLeft,window.innerWidth-current.width-margin));
+newTop=Math.max(margin,Math.min(newTop,window.innerHeight-current.height-margin));
+
+noBtn.style.left=newLeft+"px";
+noBtn.style.top=newTop+"px";
+
+/* playful rotation */
+noBtn.style.transform="rotate("+(Math.random()*14-7)+"deg)";
+
+animationFrame=requestAnimationFrame(updatePosition);
+}
+
+/* Mouse chase */
+document.addEventListener("mousemove",(e)=>{
+
+const {x:centerX,y:centerY,width,height}=getCenter();
+
+const dist=Math.hypot(e.clientX-centerX,e.clientY-centerY);
+
+if(dist<160){
+
+const angle=Math.atan2(centerY-e.clientY,centerX-e.clientX);
+
+const base=130;
+
+targetX=centerX+Math.cos(angle)*base;
+targetY=centerY+Math.sin(angle)*base;
+
+targetX=Math.max(40,Math.min(targetX,window.innerWidth-width-40));
+targetY=Math.max(40,Math.min(targetY,window.innerHeight-height-40));
+
+if(!animationFrame){
+animationFrame=requestAnimationFrame(updatePosition);
+}
+
+}
+
+});
+
+/* Random idle move */
+setInterval(()=>{
+const {x,y}=getCenter();
+
+if(targetX===null && Math.random()<.08){
+
+targetX=x+(Math.random()-.5)*140;
+targetY=y+(Math.random()-.5)*140;
+
+if(!animationFrame){
+animationFrame=requestAnimationFrame(updatePosition);
+}
+
+}
+
+},1500);
+
+}
+
+/* YES Click */
+function yesClicked(){
+
+const scene=document.getElementById("scene");
+
+scene.innerHTML=`
+<div class="success">
+<h1 style="font-size:5rem">YAYYYY! 💖💖💖</h1>
+<p style="font-size:2.2rem;margin:25px 0;color:#c2185b">
+See You On Saturday !!! <br>
+Let's not fight on Saturday 🥰
+</p>
+<div style="font-size:5rem">💃🕺❤️✨</div>
+<p style="margin-top:20px">See you soon My Cupa Nopa Spopa 🌸</p>
+</div>
+`;
+
+/* Heart burst */
+for(let i=0;i<30;i++){
+
+setTimeout(()=>{
+
+const h=document.createElement("div");
+
+h.style.position="fixed";
+h.style.left=Math.random()*100+"vw";
+h.style.top=Math.random()*60+"vh";
+h.style.fontSize="3rem";
+h.style.zIndex="999";
+h.style.transition="all 3s";
+
+h.textContent="💖";
+
+document.body.appendChild(h);
+
+setTimeout(()=>{
+h.style.transform=`translateY(-${500+Math.random()*300}px)`;
+h.style.opacity=0;
+},80);
+
+setTimeout(()=>h.remove(),3200);
+
+},i*60);
+
+}
+
+}
+
+/* Unlock Music On First Click */
+const music=document.getElementById("music-player");
+let unlocked=false;
+
+function unlockAudio(){
+
+if(unlocked) return;
+unlocked=true;
+
+music.src=music.src.replace("&mute=1","");
+
+}
+
+document.addEventListener("click",unlockAudio,{once:true});
+document.addEventListener("touchstart",unlockAudio,{once:true});
+
+/* Init */
+window.onload=()=>{
+spawnHearts();
+runawayNo();
+
+const yes=document.getElementById("yes");
+const no=document.getElementById("no");
+
+yes.style.top="50%";
+no.style.top="50%";
+};
+
+</script>
+
 </body>
 </html>

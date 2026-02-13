@@ -23,7 +23,6 @@
             position: relative;
         }
 
-        /* Floating hearts */
         .hearts-container {
             position: absolute;
             top: 0; left: 0;
@@ -71,21 +70,21 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            gap: 80px;           /* nice space between Yes and No */
-            margin: 20px 0;
+            gap: 100px;
+            margin: 30px 0;
         }
 
         button {
             font-family: 'Poppins', sans-serif;
-            font-size: 1.8rem;
+            font-size: 1.9rem;
             font-weight: 600;
-            padding: 16px 48px;
+            padding: 18px 60px;
             border: none;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.35s ease;
             box-shadow: 0 8px 25px rgba(0,0,0,0.12);
-            min-width: 160px;
+            min-width: 180px;
             user-select: none;
         }
 
@@ -95,8 +94,8 @@
         }
 
         #yes:hover {
-            transform: scale(1.12) rotate(5deg);
-            box-shadow: 0 15px 35px rgba(255, 64, 129, 0.45);
+            transform: scale(1.15) rotate(6deg);
+            box-shadow: 0 15px 35px rgba(255, 64, 129, 0.5);
         }
 
         #no {
@@ -115,12 +114,11 @@
 
         .footer-note {
             margin-top: 60px;
-            font-size: 1.05rem;
+            font-size: 1.1rem;
             color: #c2185b;
-            opacity: 0.85;
+            opacity: 0.9;
         }
 
-        /* Hidden YouTube player */
         #music-player {
             position: absolute;
             width: 1px; height: 1px;
@@ -131,7 +129,6 @@
 </head>
 <body>
 
-    <!-- Floating hearts -->
     <div class="hearts-container" id="hearts"></div>
 
     <div class="scene" id="scene">
@@ -147,17 +144,17 @@
         </div>
     </div>
 
-    <!-- Hidden YouTube embed – starts MUTED, unmutes on first click -->
+    <!-- YouTube embed: muted autoplay + unmute on first interaction -->
     <iframe 
-    id="music-player"
-    loading="lazy"  <!-- <-- this is the key addition -->
-    src="https://www.youtube.com/embed/7f_mlKlOLMo?autoplay=1&mute=1&loop=1&playlist=7f_mlKlOLMo&controls=0&modestbranding=1&showinfo=0&rel=0"
-    frameborder="0"
-    allow="autoplay; encrypted-media"
-    allowfullscreen></iframe>
+        id="music-player"
+        loading="lazy"
+        src="https://www.youtube-nocookie.com/embed/7f_mlKlOLMo?autoplay=1&mute=1&loop=1&playlist=7f_mlKlOLMo&controls=0&modestbranding=1&showinfo=0&rel=0"
+        frameborder="0"
+        allow="autoplay; encrypted-media"
+        allowfullscreen></iframe>
 
     <script>
-        // Floating hearts
+        // Create floating hearts
         function spawnHearts() {
             const container = document.getElementById('hearts');
             for (let i = 0; i < 30; i++) {
@@ -172,45 +169,43 @@
             }
         }
 
-        // Yes → success screen
+        // Success screen when Yes is clicked
         function yesClicked() {
             const scene = document.getElementById('scene');
             scene.innerHTML = `
                 <div class="success">
-                    <h1 style="font-size: 5.2rem; margin-bottom: 30px;">YAYYYY! 💖💖💖</h1>
-                    <p style="font-size: 2.3rem; color: #c2185b; margin: 30px 0;">
+                    <h1 style="font-size: 5.4rem; margin-bottom: 30px;">YAYYYY! 💖💖💖</h1>
+                    <p style="font-size: 2.4rem; color: #c2185b; margin: 30px 0;">
                         See You On Saturday !!! <br>
                         Let's not fight on Saturday Wohooo 🥰
                     </p>
-                    <div style="font-size: 5.5rem; margin: 20px 0;">💃🕺❤️✨</div>
-                    <p style="font-size: 1.5rem; color: #555;">See you soon, My Cupa Nopa Spopa lil cute shit 🌸</p>
+                    <div style="font-size: 6rem; margin: 25px 0;">💃🕺❤️✨</div>
+                    <p style="font-size: 1.6rem; color: #555;">See you soon, My Cupa Nopa Spopa lil cute shit 🌸</p>
                 </div>
             `;
 
-            // Extra heart burst
-            for (let i = 0; i < 20; i++) {
+            // Heart burst effect
+            for (let i = 0; i < 24; i++) {
                 setTimeout(() => {
                     const h = document.createElement('div');
                     h.style.position = 'fixed';
                     h.style.left = Math.random()*100 + 'vw';
-                    h.style.top = Math.random()*50 + 'vh';
-                    h.style.fontSize = '3.5rem';
+                    h.style.top = Math.random()*60 + 'vh';
+                    h.style.fontSize = '3.8rem';
                     h.style.zIndex = '999';
-                    h.style.transition = 'all 3.2s';
+                    h.style.transition = 'all 3.5s';
                     h.textContent = '💖';
                     document.body.appendChild(h);
                     setTimeout(() => {
-                        h.style.transform = `translateY(-${400 + Math.random()*500}px)`;
+                        h.style.transform = `translateY(-${450 + Math.random()*550}px)`;
                         h.style.opacity = '0';
-                    }, 80);
-                    setTimeout(() => h.remove(), 4000);
-                }, i * 60);
+                    }, 100);
+                    setTimeout(() => h.remove(), 4200);
+                }, i * 70);
             }
         }
 
-        // ────────────────────────────────────────────────
-        // MUSIC: Start muted → unmute on first user click
-        // ────────────────────────────────────────────────
+        // Music: unmute on first user interaction
         const musicIframe = document.getElementById('music-player');
         let musicUnmuted = false;
 
@@ -225,16 +220,14 @@
             }
         }
 
+        // Trigger on click or touch
         document.addEventListener('click', unlockAudio, { once: true });
         document.addEventListener('touchstart', unlockAudio, { once: true });
 
-        // Init
+        // Initialize
         window.onload = () => {
             spawnHearts();
-
-            // Center buttons (they are now static and side-by-side)
-            const yes = document.getElementById('yes');
-            const no  = document.getElementById('no');
+            // Buttons are now static → no need for positioning code
         };
     </script>
 </body>
